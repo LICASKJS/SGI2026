@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RACsadas por Unidade - Indicador SGI</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="shortcut icon" href="img/ico.png" type="image/x-icon">
+</head>
+
+<body class="dark-mode" data-page="acidentes-s-afastamento">
+    <div class="background-elements">
+        <div class="bg-element bg-element-1"></div>
+        <div class="bg-element bg-element-2"></div>
+        <div class="bg-element bg-element-3"></div>
+    </div>
+
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-container">
+                <img src="img/logo-branca.png" alt="Logo Engeman" class="logo">
+            </div>
+            <nav class="nav-menu" role="navigation" aria-label="Menu principal" data-nav-primary></nav>
+
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="page-layout">
+            <aside class="side-nav" aria-label="Navegação secundária" data-side-nav></aside>
+            <div class="page-body">
+                    <section class="hero-section">
+                        <div class="hero-container">
+                            <div class="hero-badge">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 12h6m6 0h6"/>
+                                    <path d="M12 3v18"/>
+                                </svg>
+                                <span>Indicadores SGI</span>
+                            </div>
+                            <h1 class="hero-title" data-sheet-title></h1>
+                            <p class="hero-description" data-sheet-description></p>
+                        </div>
+                    </section>
+
+                    <section class="dashboard-section">
+                        <div class="section-container">
+                            <div class="table-card" data-table-section>
+                                <div class="table-header">
+                                    <div class="table-header-content">
+                                        <h3 data-table-title></h3>
+                                        <p class="table-note" data-sheet-note></p>
+                                    </div>
+                                    <div class="table-header-actions">
+                                        <input type="file" id="workbookUpload" class="sr-only" accept=".xlsx,.xls" aria-label="Selecionar nova planilha">
+                                        <label for="workbookUpload" class="upload-trigger" data-upload-trigger title="Atualizar planilha">
+                                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                                <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            <span class="sr-only">Atualizar planilha</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="table-container">
+                                    <table id="dataTable">
+                                        <thead></thead>
+                                        <tbody></tbody>
+                                    </table>
+                                    <div class="table-footnote" id="tableFootnote"></div>
+                                </div>
+
+                            <div class="chart-card chart-wide" id="chartCard" data-chart-section>
+                                <div class="chart-header">
+                                    <h3>Resumo gráfico</h3>
+                                </div>
+                                <div class="chart-wrapper">
+                                    <canvas id="dataChart" aria-label="Gráfico dinâmico"></canvas>
+                                    <p class="chart-empty" id="chartEmpty">Sem dados numéricos para exibir.</p>
+                                </div>
+                            </div>
+
+                            </div>
+                        </div>
+                    </section>
+
+            </div>
+        </div>
+    </main>
+
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="js/script.js"></script>
+</body>
+</html>
