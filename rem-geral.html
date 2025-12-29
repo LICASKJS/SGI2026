@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AÇÕES CORRETIVAS - Indicadores SGI</title>
+    <title>REM GERAL - Indicador SGI</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="shortcut icon" href="img/ico.png" type="image/x-icon">
 </head>
 
-<body class="dark-mode" data-page="acoes-corretivas">
+<body class="dark-mode" data-page="rem-geral">
     <div class="background-elements">
         <div class="bg-element bg-element-1"></div>
         <div class="bg-element bg-element-2"></div>
@@ -51,6 +51,9 @@
                                         <h3 data-table-title></h3>
                                     </div>
                                     <div class="table-header-actions">
+                                        <label for="sheetSelect" class="sr-only">Selecionar aba</label>
+                                        <select id="sheetSelect" class="filter-select" aria-label="Selecionar aba"></select>
+
                                         <input type="file" id="workbookUpload" class="sr-only" accept=".xlsx,.xls" aria-label="Selecionar nova planilha">
                                         <label for="workbookUpload" class="upload-trigger" data-upload-trigger title="Atualizar planilha">
                                             <svg viewBox="0 0 24 24" aria-hidden="true">
