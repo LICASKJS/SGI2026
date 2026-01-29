@@ -118,8 +118,8 @@ const navGroups = [
   },
   {
     id: "avaliacoes",
-    label: "Auditoria e Saúde",
-    pages: ["aud-comp", "garantia-vida"],
+    label: "Auditoria",
+    pages: ["aud-comp"],
   },
   {
     id: "gestao",
@@ -136,6 +136,12 @@ const navGroups = [
     label: "REM GERAL",
     pages: ["rem-geral"],
   },
+
+  {
+    id: "avaliacoes",
+    label: "Saúde",
+    pages: ["garantia-vida"],
+  }
 ]
 
 const iconTemplates = {
