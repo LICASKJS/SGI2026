@@ -39,12 +39,24 @@ const pages = [
     sheet: "Observatório de Segurança",
     sheetLabel: "Observatório de Segurança",
     sheetAliases: ["OBSERVATORIO", "OBSERVATÓRIO", "Observatório de Segurança"],
-    file: "analise.html",
+    file: "observatorio.html",
     navLabel: "Observatório",
     icon: "eye",
     heroTitle: "Observatório de Segurança",
     view: "both",
     description: "Indicadores de segurança com métricas e estatísticas.",
+  },
+  {
+    id: "conformidade-legal",
+    sheet: "CONFORMIDADE LEGAL",
+    sheetLabel: "CONFORMIDADE LEGAL",
+    sheetAliases: ["CONFORMIDADE LEGAL", "ANÁLISE DE CONFORMIDADE", "AVALIAÇÃO DE CONFORMIDADE LEGAL"],
+    file: "geri-geri-co.html",
+    navLabel: "Conformidade Legal",
+    icon: "target",
+    heroTitle: "Conformidade Legal",
+    view: "both",
+    description: "Análise de conformidade legal com todos os requisitos avaliados e atendidos.",
   },
   {
     id: "aud-comp",
@@ -133,6 +145,11 @@ const navGroups = [
     id: "saude",
     label: "Saúde",
     pages: ["garantia-vida"],
+  },
+  {
+    id: "conformidade",
+    label: "Conformidade Legal",
+    pages: ["conformidade-legal"],
   },
 ]
 
