@@ -1,6 +1,6 @@
 const DEFAULT_WORKBOOK_ID = "indicadores"
 const WORKBOOK_PATHS = {
-  [DEFAULT_WORKBOOK_ID]: "dados/INDICADORES.xlsx",
+  [DEFAULT_WORKBOOK_ID]: "dados/BASE DE DADOS - INDICADORES (1).xlsx",
 }
 
 const STORAGE_KEYS = {
