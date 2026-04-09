@@ -1,12 +1,14 @@
 const DEFAULT_WORKBOOK_ID = "indicadores"
 const WORKBOOK_PATHS = {
-  [DEFAULT_WORKBOOK_ID]: "dados/BASE DE DADOS - INDICADORES (1).xlsx",
+  [DEFAULT_WORKBOOK_ID]: "dados/BASE DE DADOS - INDICADORES (1) (1).xlsx",
 }
 
 const STORAGE_KEYS = {
   data: (workbookId) => `sgiWorkbookData:${workbookId}`,
   source: (workbookId) => `sgiWorkbookSource:${workbookId}`,
   selectedSheet: (pageId) => `sgiSelectedSheet:${pageId}`,
+  globalData: "sgiGlobalWorkbookData",
+  globalSource: "sgiGlobalWorkbookSource",
 }
 
 const pages = [
@@ -324,6 +326,10 @@ function getWorkbookSource(workbookId) {
   const source = workbookSource.get(workbookId)
   if (source) return source
 
+  // Check global storage first
+  const globalSource = localStorage.getItem(STORAGE_KEYS.globalSource)
+  if (globalSource) return globalSource
+
   const workbookPath = getWorkbookPath(workbookId)
   return workbookPath?.split("/").pop() || "arquivo padrão"
 }
@@ -535,6 +541,9 @@ function setupWorkbookUpload(pageInfo) {
       workbookSource.set(workbookId, file.name)
       persistWorkbook(workbookId, workbook, file.name)
 
+      // Notify other pages that data has been updated
+      window.postMessage({ type: "WORKBOOK_UPDATED", source: file.name }, "*")
+
       const sheetName = setupSheetSelector(pageInfo, workbook, workbookId) || pageInfo.sheet
       const runtimePage = buildRuntimePage(pageInfo, sheetName)
       const tableData = renderSheetTable(runtimePage, workbook, { source: file.name })
@@ -544,6 +553,22 @@ function setupWorkbookUpload(pageInfo) {
     } finally {
       setUploadState(false)
       input.value = ""
+    }
+  })
+
+  // Listen for workbook updates from other pages
+  window.addEventListener("message", async (event) => {
+    if (event.data?.type === "WORKBOOK_UPDATED") {
+      const workbookId = getWorkbookId(pageInfo)
+      const stored = loadWorkbookFromStorage(workbookId)
+      if (stored) {
+        workbookCache.set(workbookId, stored.workbook)
+        workbookSource.set(workbookId, stored.source)
+        const sheetName = setupSheetSelector(pageInfo, stored.workbook, workbookId) || pageInfo.sheet
+        const runtimePage = buildRuntimePage(pageInfo, sheetName)
+        const tableData = renderSheetTable(runtimePage, stored.workbook, { source: stored.source })
+        renderSheetChart(runtimePage, tableData)
+      }
     }
   })
 }
@@ -559,6 +584,9 @@ function persistWorkbook(workbookId, workbook, source) {
     const serialized = XLSX.write(workbook, { bookType: "xlsx", type: "base64" })
     localStorage.setItem(STORAGE_KEYS.data(workbookId), serialized)
     localStorage.setItem(STORAGE_KEYS.source(workbookId), source || "arquivo importado")
+    // Also save to global storage for cross-page access
+    localStorage.setItem(STORAGE_KEYS.globalData, serialized)
+    localStorage.setItem(STORAGE_KEYS.globalSource, source || "arquivo importado")
   } catch (error) {
     console.warn("Não foi possível salvar a planilha localmente.", error)
   }
@@ -566,6 +594,15 @@ function persistWorkbook(workbookId, workbook, source) {
 
 function loadWorkbookFromStorage(workbookId) {
   try {
+    // First try to load from global storage (cross-page)
+    const globalData = localStorage.getItem(STORAGE_KEYS.globalData)
+    if (globalData) {
+      const globalSource = localStorage.getItem(STORAGE_KEYS.globalSource) || "arquivo importado"
+      const workbook = XLSX.read(globalData, { type: "base64" })
+      return { workbook, source: globalSource }
+    }
+    
+    // Fallback to page-specific storage
     const data = localStorage.getItem(STORAGE_KEYS.data(workbookId))
     if (!data) return null
     const source = localStorage.getItem(STORAGE_KEYS.source(workbookId)) || "arquivo importado"
